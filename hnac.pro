@@ -1,11 +1,13 @@
 QT += network
 TARGET = hnac
 TEMPLATE = app
+
 SOURCES += main.cpp \
     login.cpp \
     hnaclient.cpp \
     logout.cpp \
     mainwindow.cpp
+
 HEADERS += login.h \
     hnaclient.h \
     logout.h \
