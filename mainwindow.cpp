@@ -59,6 +59,11 @@ void MainWindow::createTrayIcon()
     isHideOnClose->setChecked(settings->value("isHide", false).toBool());
     connect(isHideOnClose, SIGNAL(toggled(bool)), this, SLOT(setIsHide(bool)));
 
+    autorunAction = new QAction(this);
+    autorunAction->setCheckable(true);
+    autorunAction->setChecked(settings->value("autorun", false).toBool());
+    connect(autorunAction, SIGNAL(toggled(bool)), this, SLOT(setAutorun(bool)));
+
     showHideAction = new QAction(this);
     connect(showHideAction, SIGNAL(triggered()), this, SLOT(showHide()));
 
@@ -122,6 +127,7 @@ void MainWindow::createTrayIcon()
     trayIcon->setContextMenu(trayIconMenu);
     optionsTrayMenu->addAction(isSavePassword);
     optionsTrayMenu->addAction(isHideOnClose);
+    optionsTrayMenu->addAction(autorunAction);
     optionsTrayMenu->addMenu(languageMenu);
     optionsTrayMenu->addMenu(opacityMenu);
 
@@ -135,6 +141,7 @@ void MainWindow::retranslateUI()
     setWindowTitle(tr("HNA Client"));
     isSavePassword->setText(tr("Save password"));
     isHideOnClose->setText(tr("Hide on close"));
+    autorunAction->setText(tr("Run at startup"));
     quitAction->setText(tr("Quit"));
     aboutAction->setText(tr("About HNA Client..."));
     opacityMenu->setTitle(tr("Opacity"));
@@ -158,6 +165,18 @@ void MainWindow::setLanguage(QAction *action)
     translator.load(":/translations/hnac_"+locale);
     settings->setValue("language", locale);
     retranslateUI();
+}
+
+void MainWindow::setAutorun(bool state)
+{
+    settings->setValue("autorun", state);
+    if(state)
+        {
+#ifdef Q_WS_WIN
+            QSettings *autorun = new QSettings("HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
+            autorun->setValue("hna client", qApp->applicationFilePath());
+#endif
+        }
 }
 
 void MainWindow::stateChanged()

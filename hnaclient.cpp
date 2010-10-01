@@ -33,6 +33,9 @@ HnaClient::HnaClient(QObject *parent) :
     m_tmr->setInterval(15000);
     connect(m_tmr, SIGNAL(timeout()), this, SLOT(sockSendPing()));
     m_tmr->start();
+    r_tmr = new QTimer(this);
+    r_tmr->setInterval(10000);
+    connect(r_tmr, SIGNAL(timeout()), this, SLOT(tryLogin()));
 }
 
 HnaClient::~HnaClient()
@@ -52,9 +55,15 @@ HnaClient::HnaState HnaClient::state()
 
 void HnaClient::tryLogin(QString login, QString pass)
 {
+    r_tmr->stop();
     sock->connectToHostEncrypted("172.30.0.1", 3816, QIODevice::ReadWrite);
     m_login = login;
     m_pass = pass;
+}
+
+void HnaClient::tryLogin()
+{
+    tryLogin(m_login, m_pass);
 }
 
 void HnaClient::sockEncrypted()
@@ -91,6 +100,7 @@ void HnaClient::sockError(QAbstractSocket::SocketError)
 {
     QMessageBox::critical((QWidget*)parent(), QString("HNAClient"),
                           QString("Socket error: ") + sock->errorString());
+    r_tmr->start();
 }
 
 void HnaClient::sockStateChanged(QAbstractSocket::SocketState socketState)

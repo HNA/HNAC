@@ -34,5 +34,12 @@ void logout::retranslateUI()
 
 void logout::setIP(QString ip)
 {
-    listInfo->addItem(tr("Current IP: ") + ip);
+    if(listInfo->item(0))
+        {
+            listInfo->item(0)->setText(tr("Current IP: ") + ip);
+        }
+    else
+        {
+            listInfo->addItem(tr("Current IP: ") + ip);
+        }
 }

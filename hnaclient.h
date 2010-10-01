@@ -21,19 +21,17 @@ signals:
     void stateChanged();
     void setIP(QString);
 private slots:
-    void tryLogin(QString login, QString pass);
     void logout();
     void sockConnected();
     void sockDisconnected ();
     void sockError(QAbstractSocket::SocketError);
     void sockStateChanged ( QAbstractSocket::SocketState socketState );
     void sockReadyRead();
-
     void sockEncrypted();
     void sockSslErrors(QList<QSslError>);
-
+    void tryLogin(QString login, QString pass);
     void sockSendPing();
-
+    void tryLogin();
 private:
     QSslSocket *sock;
     HnaState m_state;
@@ -47,6 +45,7 @@ private:
     QString m_login;
     QString m_pass;
     QTimer *m_tmr;
+    QTimer *r_tmr;
 };
 
 #endif // HNACLIENT_H

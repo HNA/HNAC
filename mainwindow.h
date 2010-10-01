@@ -23,6 +23,7 @@ private slots:
     void setIsSave(bool);
     void setIsHide(bool);
     void setLanguage(QAction*);
+    void setAutorun(bool);
     void about();
     void Exit();
 
@@ -43,6 +44,7 @@ private:
     logout *lo;
 
     QAction *showHideAction;
+    QAction *autorunAction;
     QAction *isSavePassword;
     QAction *isHideOnClose;
     QAction *quitAction;
