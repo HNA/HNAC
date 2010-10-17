@@ -30,7 +30,7 @@ void MainWindow::setupGui()
     widget->setLayout(mainLayout);
     setCentralWidget(widget);
     setFixedSize(200, 100);
-    move(settings->value("pos", QPoint(0, 0)).toPoint());
+    move(settings->value("pos", QApplication::desktop()->availableGeometry().center()).toPoint());
     Qt::WindowFlags wflags;
     wflags = Qt::FramelessWindowHint;
     setWindowFlags(wflags);
@@ -170,11 +170,19 @@ void MainWindow::setLanguage(QAction *action)
 void MainWindow::setAutorun(bool state)
 {
     settings->setValue("autorun", state);
+    QSettings *autorun;
     if(state)
         {
 #ifdef Q_WS_WIN
-            QSettings *autorun = new QSettings("HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
+            autorun = new QSettings("HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
             autorun->setValue("hna client", qApp->applicationFilePath());
+#endif
+        }
+    else
+        {
+#ifdef Q_WS_WIN
+            autorun = new QSettings("HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
+            autorun->remove("hna client");
 #endif
         }
 }
