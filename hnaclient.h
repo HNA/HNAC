@@ -1,42 +1,37 @@
 #ifndef HNACLIENT_H
 #define HNACLIENT_H
 
-#include <QtGui>
 #include <QAbstractSocket>
 #include <QSslError>
+#include <QSettings>
+#include <QTimer>
 
 class QSslSocket;
 class QSslCertificate;
 
 class HnaClient : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     explicit HnaClient(QObject *parent = 0);
     ~HnaClient();
 
-    enum HnaState {Disconnected, Connected, AboutToConnect};
-    HnaState state();
-signals:
-    void stateChanged();
-    void setIP(QString);
-private slots:
+public slots:
     void logout();
+    void tryLogin();
+    void tryLogin(QString login, QString pass);
+
+private slots:
     void sockConnected();
-    void sockDisconnected ();
     void sockError(QAbstractSocket::SocketError);
-    void sockStateChanged ( QAbstractSocket::SocketState socketState );
     void sockReadyRead();
     void sockEncrypted();
     void sockSslErrors(QList<QSslError>);
-    void tryLogin(QString login, QString pass);
     void sockSendPing();
-    void tryLogin();
+
 private:
     QSslSocket *sock;
-    HnaState m_state;
     QByteArray loginQuery;
-    bool loggedIn;
     QSettings *settings;
 
     QList<QSslCertificate> certsCA;

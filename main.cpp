@@ -1,10 +1,7 @@
-#include <QtGui/QApplication>
-#include "mainwindow.h"
+#include "service.h"
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
-    MainWindow hnac;
-    hnac.show();
-    return app.exec();
+    Service service(argc, argv);
+    return service.exec();
 }

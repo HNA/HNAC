@@ -1,23 +1,23 @@
 #include "hnaclient.h"
-#include "login.h"
 
 #include <QSslSocket>
 #include <QHostAddress>
+#include <QFile>
+#include <QStringList>
 
 HnaClient::HnaClient(QObject *parent) :
-    QObject(parent), m_state(Disconnected), loggedIn(false)
+    QObject(parent)
 {
-    settings = new QSettings("Hostel2", "hnac");
+    settings = new QSettings(QSettings::SystemScope, "Hostel2", "hnac");
+    m_login = settings->value("login", "").toString();
+    m_pass = settings->value("password", "").toString();
     sock = new QSslSocket(this);
 
     expectedSslErrors.append(QSslError(QSslError::HostNameMismatch));
 
     connect(sock, SIGNAL(connected()), this, SLOT(sockConnected()));
-    connect(sock, SIGNAL(disconnected()), this, SLOT(sockDisconnected()));
     connect(sock, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(sockError(QAbstractSocket::SocketError)));
-    connect(sock, SIGNAL(stateChanged(QAbstractSocket::SocketState)),
-            this, SLOT(sockStateChanged(QAbstractSocket::SocketState)));
     connect(sock, SIGNAL(readyRead()), this, SLOT(sockReadyRead()));
     connect(sock, SIGNAL(encrypted()), this, SLOT(sockEncrypted()));
     connect(sock, SIGNAL(sslErrors(QList<QSslError>)),
@@ -34,31 +34,38 @@ HnaClient::HnaClient(QObject *parent) :
     connect(m_tmr, SIGNAL(timeout()), this, SLOT(sockSendPing()));
     m_tmr->start();
     r_tmr = new QTimer(this);
-    r_tmr->setInterval(10000);
+    r_tmr->setInterval(1000);
     connect(r_tmr, SIGNAL(timeout()), this, SLOT(tryLogin()));
 }
 
 HnaClient::~HnaClient()
-{
-    delete sock;
-}
+{}
 
 void HnaClient::sockSendPing()
 {
     sock->write("~ping;");
 }
 
-HnaClient::HnaState HnaClient::state()
-{
-    return m_state;
-}
-
 void HnaClient::tryLogin(QString login, QString pass)
 {
+    if(login.length() > 0)
+        {
+            m_login = login;
+        }
+    else
+        {
+            m_login = settings->value("login", "").toString();
+        }
+    if(pass.length() > 0)
+        {
+            m_pass = pass;
+        }
+    else
+        {
+            m_pass = settings->value("password", "").toString();
+        }
     r_tmr->stop();
     sock->connectToHostEncrypted("172.30.0.1", 3816, QIODevice::ReadWrite);
-    m_login = login;
-    m_pass = pass;
 }
 
 void HnaClient::tryLogin()
@@ -75,46 +82,19 @@ void HnaClient::sockEncrypted()
             .append(m_pass)
             .append(" ")
             .append(QString::number(sock->localAddress().toIPv4Address()))
-            //maybe not work with internet connection !!!!
             .append(";");
-    emit setIP(sock->localAddress().toString());
-    m_state = Connected;
     sock->write(loginQuery);
 }
 
 void HnaClient::sockConnected()
 {
-    if(settings->value("isSave", true).toBool())
-    {
         settings->setValue("login", m_login);
         settings->setValue("password", m_pass);
-    }
-}
-
-void HnaClient::sockDisconnected()
-{
-    m_state = Disconnected;
 }
 
 void HnaClient::sockError(QAbstractSocket::SocketError)
 {
-    QMessageBox::critical((QWidget*)parent(), QString("HNAClient"),
-                          QString("Socket error: ") + sock->errorString());
     r_tmr->start();
-}
-
-void HnaClient::sockStateChanged(QAbstractSocket::SocketState socketState)
-{
-    if (socketState == QAbstractSocket::UnconnectedState)
-    {
-        m_state = Disconnected;
-        emit stateChanged();
-    }
-    else if (socketState == QAbstractSocket::ConnectedState)
-    {
-        m_state = AboutToConnect;
-        emit stateChanged();
-    }
 }
 
 void HnaClient::logout()
@@ -125,21 +105,7 @@ void HnaClient::logout()
 
 void HnaClient::sockReadyRead()
 {
-    QByteArray data = sock->readAll();
-    QStringList responseList = QString::fromUtf8(data.data(),
-                                                 data.size()).split(";");
-    for (int i = 0; i < responseList.size(); i++)
-    {
-        if (responseList[i] == "~logged_in")
-        {
-            m_state = Connected;
-            emit stateChanged();
-        }
-        else
-        {
-
-        }
-    }
+    sock->readAll();//работать будет... но в случае шибки сложно отследить... позже исправлю..
 }
 
 void HnaClient::sockSslErrors(QList<QSslError> le)
