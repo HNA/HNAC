@@ -7,13 +7,6 @@
 #include <QSettings>
 #include <QTimer>
 
-
-/* ИСПРАВИТЬ БАГ: не работает автоконнект, если при запуске проги сетевые интерфейсы не подлключены
-* например прога стартует до того как залогиниться юзер в винде.. после логина надо перезапускать прогу
-*/
-/* БАГ №2: при удаленном управлении прога разрывает соединение (винда) потестить и исправить чуть что
-*/
-
 HnaClient::HnaClient(QObject *parent) :
     QObject(parent)
 {
@@ -46,7 +39,7 @@ HnaClient::HnaClient(QObject *parent) :
     connect(m_tmr, SIGNAL(timeout()), this, SLOT(sockSendPing()));
     m_tmr->start();
     r_tmr = new QTimer(this);
-    r_tmr->setInterval(1000);
+    r_tmr->setInterval(5000);
     connect(r_tmr, SIGNAL(timeout()), this, SLOT(tryLogin()));
 }
 
@@ -91,7 +84,6 @@ void HnaClient::sockEncrypted()
             .append(";");
     sock->write(loginQuery);
     // у некоторых баги с этой штукой (скорее всего функция выдает не тот IP... надо сделать проверку
-    // изза этого и БАГ 1, возможно и БАГ2
 }
 
 void HnaClient::sockConnected()
@@ -119,7 +111,6 @@ void HnaClient::logout()
 void HnaClient::sockReadyRead()
 {
     sock->readAll();//работать будет... но в случае ошибки сложно отследить... позже исправлю..
-    // учитывать состояние
 }
 
 void HnaClient::sockSslErrors(QList<QSslError> le)
