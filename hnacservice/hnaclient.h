@@ -3,8 +3,6 @@
 
 #include <QAbstractSocket>
 #include <QSslError>
-#include <QSettings>
-#include <QTimer>
 
 class QSslSocket;
 class QSslCertificate;
@@ -21,13 +19,9 @@ public:
 public slots:
     void logout();
     void tryLogin();
-<<<<<<< HEAD:hnacservice/hnaclient.h
 #if !defined(Q_WS_WIN)
     void tryLogin(QString login, QString pass);
 #endif
-=======
-    void tryLogin(QString login, QString pass);
->>>>>>> 973accdc68e3497f1ea66c5f766c55227a1bd9b7:hnaclient.h
 
 private slots:
     void sockConnected();

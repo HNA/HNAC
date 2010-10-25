@@ -4,33 +4,25 @@
 #include <QHostAddress>
 #include <QFile>
 #include <QStringList>
-<<<<<<< HEAD:hnacservice/hnaclient.cpp
 #include <QSettings>
 #include <QTimer>
 
 
 /* ИСПРАВИТЬ БАГ: не работает автоконнект, если при запуске проги сетевые интерфейсы не подлключены
-  *  например прога стартует до того как залогиниться юзер в винде.. после логина надо перезапускать прогу
-  */
+* например прога стартует до того как залогиниться юзер в винде.. после логина надо перезапускать прогу
+*/
 /* БАГ №2: при удаленном управлении прога разрывает соединение (винда) потестить и исправить чуть что
-   */
-=======
->>>>>>> 973accdc68e3497f1ea66c5f766c55227a1bd9b7:hnaclient.cpp
+*/
 
 HnaClient::HnaClient(QObject *parent) :
     QObject(parent)
 {
     settings = new QSettings(QSettings::SystemScope, "Hostel2", "hnac");
-<<<<<<< HEAD:hnacservice/hnaclient.cpp
 #if !defined(Q_WS_WIN)
     m_login = settings->value("login", "").toString();
     m_pass = settings->value("password", "").toString();
     newData = false;
 #endif
-=======
-    m_login = settings->value("login", "").toString();
-    m_pass = settings->value("password", "").toString();
->>>>>>> 973accdc68e3497f1ea66c5f766c55227a1bd9b7:hnaclient.cpp
     sock = new QSslSocket(this);
 
     expectedSslErrors.append(QSslError(QSslError::HostNameMismatch));
@@ -66,7 +58,6 @@ void HnaClient::sockSendPing()
     sock->write("~ping;");
 }
 
-<<<<<<< HEAD:hnacservice/hnaclient.cpp
 #if !defined(Q_WS_WIN)
 void HnaClient::tryLogin(QString login, QString pass)
 {
@@ -75,28 +66,6 @@ void HnaClient::tryLogin(QString login, QString pass)
         newData = true;
         r_tmr->stop();
         sock->connectToHostEncrypted("172.30.0.1", 3816, QIODevice::ReadWrite);
-=======
-void HnaClient::tryLogin(QString login, QString pass)
-{
-    if(login.length() > 0)
-        {
-            m_login = login;
-        }
-    else
-        {
-            m_login = settings->value("login", "").toString();
-        }
-    if(pass.length() > 0)
-        {
-            m_pass = pass;
-        }
-    else
-        {
-            m_pass = settings->value("password", "").toString();
-        }
-    r_tmr->stop();
-    sock->connectToHostEncrypted("172.30.0.1", 3816, QIODevice::ReadWrite);
->>>>>>> 973accdc68e3497f1ea66c5f766c55227a1bd9b7:hnaclient.cpp
 }
 #endif
 
@@ -127,7 +96,6 @@ void HnaClient::sockEncrypted()
 
 void HnaClient::sockConnected()
 {
-<<<<<<< HEAD:hnacservice/hnaclient.cpp
 #if !defined(Q_WS_WIN)
     if(newData)
         {
@@ -135,10 +103,6 @@ void HnaClient::sockConnected()
             settings->setValue("password", m_pass);
         }
 #endif
-=======
-        settings->setValue("login", m_login);
-        settings->setValue("password", m_pass);
->>>>>>> 973accdc68e3497f1ea66c5f766c55227a1bd9b7:hnaclient.cpp
 }
 
 void HnaClient::sockError(QAbstractSocket::SocketError)
@@ -154,12 +118,8 @@ void HnaClient::logout()
 
 void HnaClient::sockReadyRead()
 {
-<<<<<<< HEAD:hnacservice/hnaclient.cpp
     sock->readAll();//работать будет... но в случае ошибки сложно отследить... позже исправлю..
     // учитывать состояние
-=======
-    sock->readAll();//работать будет... но в случае шибки сложно отследить... позже исправлю..
->>>>>>> 973accdc68e3497f1ea66c5f766c55227a1bd9b7:hnaclient.cpp
 }
 
 void HnaClient::sockSslErrors(QList<QSslError> le)

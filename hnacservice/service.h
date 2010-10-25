@@ -25,4 +25,3 @@ private:
 #endif
 };
 
-#endif // SERVICE_H
