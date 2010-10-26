@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>320</width>
-    <height>249</height>
+    <height>281</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -26,39 +26,103 @@
       <property name="title">
        <string>User Data</string>
       </property>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="labelLogin">
-         <property name="text">
-          <string>Login:</string>
-         </property>
-         <property name="buddy">
-          <cstring>lineEdit_login</cstring>
-         </property>
-        </widget>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QLabel" name="labelLogin">
+           <property name="minimumSize">
+            <size>
+             <width>60</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Login:</string>
+           </property>
+           <property name="buddy">
+            <cstring>lineEdit_login</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit_login"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_loginsave">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Save</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="lineEdit_login"/>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLabel" name="labelPassword">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>60</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Password:</string>
+           </property>
+           <property name="buddy">
+            <cstring>lineEdit_password</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit_password">
+           <property name="echoMode">
+            <enum>QLineEdit::Password</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_passsave">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Save</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="labelPassword">
-         <property name="text">
-          <string>Password:</string>
-         </property>
-         <property name="buddy">
-          <cstring>lineEdit_password</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="lineEdit_password">
-         <property name="echoMode">
-          <enum>QLineEdit::Password</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
+       <item>
         <widget class="QCheckBox" name="checkBox_showpass">
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
          <property name="text">
           <string>Show / Hide Password</string>
          </property>
@@ -72,77 +136,77 @@
       <property name="title">
        <string>Service</string>
       </property>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="1">
-        <widget class="QPushButton" name="pushButton_start">
-         <property name="toolTip">
-          <string>Запустить службу</string>
-         </property>
-         <property name="text">
-          <string>Start</string>
-         </property>
-        </widget>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QPushButton" name="pushButton_install">
+           <property name="toolTip">
+            <string>Install service</string>
+           </property>
+           <property name="text">
+            <string>Install</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_uninstall">
+           <property name="toolTip">
+            <string>Uninstall service</string>
+           </property>
+           <property name="text">
+            <string>Uninstall</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
-       <item row="0" column="2">
-        <widget class="QPushButton" name="pushButton_stop">
-         <property name="toolTip">
-          <string>Остановить службу</string>
-         </property>
-         <property name="text">
-          <string>Stop</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
-        <widget class="QPushButton" name="pushButton_restart">
-         <property name="toolTip">
-          <string>Перезагрузить службу</string>
-         </property>
-         <property name="text">
-          <string>Restart</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="3">
-        <widget class="QPushButton" name="pushButton_uninstall">
-         <property name="toolTip">
-          <string>Удалить службу Windows</string>
-         </property>
-         <property name="text">
-          <string>Uninstall</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QPushButton" name="pushButton_install">
-         <property name="toolTip">
-          <string>Установить службу Windows</string>
-         </property>
-         <property name="text">
-          <string>Install</string>
-         </property>
-        </widget>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QPushButton" name="pushButton_start">
+           <property name="toolTip">
+            <string>Start service</string>
+           </property>
+           <property name="text">
+            <string>Start</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_stop">
+           <property name="toolTip">
+            <string>Stop service</string>
+           </property>
+           <property name="text">
+            <string>Stop</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_restart">
+           <property name="toolTip">
+            <string>Restart service</string>
+           </property>
+           <property name="text">
+            <string>Restart</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QPushButton" name="pushButton_cancel">
-        <property name="text">
-         <string>Cancel</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_saveclose">
-        <property name="text">
-         <string>Close</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <widget class="QPushButton" name="pushButton_cancel">
+      <property name="toolTip">
+       <string>Cancel without saving</string>
+      </property>
+      <property name="text">
+       <string>Close</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -154,10 +218,7 @@
   <tabstop>pushButton_start</tabstop>
   <tabstop>pushButton_stop</tabstop>
   <tabstop>pushButton_restart</tabstop>
-  <tabstop>pushButton_install</tabstop>
   <tabstop>pushButton_uninstall</tabstop>
-  <tabstop>pushButton_cancel</tabstop>
-  <tabstop>pushButton_saveclose</tabstop>
  </tabstops>
  <resources/>
  <connections/>

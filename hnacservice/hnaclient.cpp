@@ -64,7 +64,7 @@ void HnaClient::tryLogin(QString login, QString pass)
 
 void HnaClient::tryLogin()
 {
-#if defined(Q_WS_WIN) //чтобы "налету" менять логин и пасс в винде..
+#if defined(Q_WS_WIN)
     m_login = settings->value("login", "").toString();
     m_pass = settings->value("password", "").toString();
 #endif

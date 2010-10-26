@@ -26,12 +26,13 @@ private:
     QSettings *settings;
 
 private slots:
+    void on_pushButton_passsave_clicked();
+    void on_pushButton_loginsave_clicked();
     void on_checkBox_showpass_clicked();
     void on_lineEdit_password_textChanged(QString );
     void on_lineEdit_login_textChanged(QString );
     void on_pushButton_uninstall_clicked();
     void on_pushButton_install_clicked();
-    void on_pushButton_saveclose_clicked();
     void on_pushButton_cancel_clicked();
     void on_pushButton_restart_clicked();
     void on_pushButton_stop_clicked();

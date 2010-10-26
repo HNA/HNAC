@@ -5,9 +5,9 @@ TEMPLATE = subdirs
 
 SUBDIRS += hnacservice
 
-!unix {
+#!unix {
     SUBDIRS += HnacConfig
-}
+#}
 
 win32 {
    RC_FILE = hnac.rc
