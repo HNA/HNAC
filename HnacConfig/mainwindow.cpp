@@ -29,12 +29,14 @@ MainWindow::MainWindow(QWidget *parent) :
                     ui->pushButton_start->setVisible(false);
                     ui->pushButton_restart->setVisible(true);
                     ui->pushButton_stop->setVisible(true);
+                    ui->pushButton_uninstall->setVisible(false);
                 }
             else
                 {
                     ui->pushButton_start->setVisible(true);
                     ui->pushButton_restart->setVisible(false);
                     ui->pushButton_stop->setVisible(false);
+                    ui->pushButton_uninstall->setVisible(true);
                 }
         }
     else
@@ -62,6 +64,11 @@ void MainWindow::on_pushButton_start_clicked()
             ui->pushButton_start->setVisible(false);
             ui->pushButton_restart->setVisible(true);
             ui->pushButton_stop->setVisible(true);
+            ui->pushButton_uninstall->setVisible(false);
+        }
+    else
+        {
+            ui->statusBar->showMessage(tr("An error occurred during starting"));
         }
 }
 
@@ -73,6 +80,11 @@ void MainWindow::on_pushButton_stop_clicked()
             ui->pushButton_start->setVisible(true);
             ui->pushButton_stop->setVisible(false);
             ui->pushButton_restart->setVisible(false);
+            ui->pushButton_uninstall->setVisible(true);
+        }
+    else
+        {
+            ui->statusBar->showMessage(tr("An error occurred during stoping"));
         }
 }
 
@@ -84,12 +96,14 @@ void MainWindow::on_pushButton_restart_clicked()
             ui->pushButton_start->setVisible(true);
             ui->pushButton_stop->setVisible(false);
             ui->pushButton_restart->setVisible(false);
+            ui->pushButton_uninstall->setVisible(true);
             if(control->start())
                 {
                     ui->statusBar->showMessage(tr("Hnac service is running"));
                     ui->pushButton_start->setVisible(false);
                     ui->pushButton_restart->setVisible(true);
                     ui->pushButton_stop->setVisible(true);
+                    ui->pushButton_uninstall->setVisible(false);
                 }
         }
 }
