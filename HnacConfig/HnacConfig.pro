@@ -3,7 +3,6 @@ QT       += core gui
 TARGET = HnacConfig
 TEMPLATE = app
 
-
 SOURCES += main.cpp\
         mainwindow.cpp
 

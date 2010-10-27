@@ -1,14 +1,10 @@
-CONFIG += warn_on \
-	qt
+CONFIG += qt warn_on
 
 TEMPLATE = subdirs
 
 SUBDIRS += hnacservice
 
-#!unix {
-    SUBDIRS += HnacConfig
-#}
-
 win32 {
+   SUBDIRS += HnacConfig
    RC_FILE = hnac.rc
 }
