@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>283</height>
+    <width>336</width>
+    <height>307</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -44,7 +44,7 @@
             </size>
            </property>
            <property name="text">
-            <string>Login:</string>
+            <string>&amp;Login:</string>
            </property>
            <property name="buddy">
             <cstring>lineEdit_login</cstring>
@@ -86,7 +86,7 @@
             </size>
            </property>
            <property name="text">
-            <string>Password:</string>
+            <string>&amp;Password:</string>
            </property>
            <property name="buddy">
             <cstring>lineEdit_password</cstring>
@@ -162,7 +162,7 @@
             <string>Install service</string>
            </property>
            <property name="text">
-            <string>Install</string>
+            <string>&amp;Install</string>
            </property>
           </widget>
          </item>
@@ -172,7 +172,7 @@
             <string>Uninstall service</string>
            </property>
            <property name="text">
-            <string>Uninstall</string>
+            <string>&amp;Uninstall</string>
            </property>
           </widget>
          </item>
@@ -186,7 +186,7 @@
             <string>Start service</string>
            </property>
            <property name="text">
-            <string>Start</string>
+            <string>&amp;Start</string>
            </property>
           </widget>
          </item>
@@ -196,7 +196,7 @@
             <string>Stop service</string>
            </property>
            <property name="text">
-            <string>Stop</string>
+            <string>Sto&amp;p</string>
            </property>
           </widget>
          </item>
@@ -206,7 +206,7 @@
             <string>Restart service</string>
            </property>
            <property name="text">
-            <string>Restart</string>
+            <string>&amp;Restart</string>
            </property>
           </widget>
          </item>
@@ -218,10 +218,16 @@
     <item>
      <widget class="QPushButton" name="pushButton_cancel">
       <property name="toolTip">
-       <string>Cancel without saving</string>
+       <string>Close window</string>
       </property>
       <property name="text">
-       <string>Close</string>
+       <string>&amp;Close</string>
+      </property>
+      <property name="default">
+       <bool>true</bool>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
       </property>
      </widget>
     </item>
@@ -236,11 +242,16 @@
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
   <tabstop>lineEdit_login</tabstop>
+  <tabstop>pushButton_loginsave</tabstop>
   <tabstop>lineEdit_password</tabstop>
+  <tabstop>pushButton_passsave</tabstop>
+  <tabstop>checkBox_showpass</tabstop>
+  <tabstop>pushButton_install</tabstop>
   <tabstop>pushButton_start</tabstop>
   <tabstop>pushButton_stop</tabstop>
   <tabstop>pushButton_restart</tabstop>
   <tabstop>pushButton_uninstall</tabstop>
+  <tabstop>pushButton_cancel</tabstop>
  </tabstops>
  <resources/>
  <connections/>

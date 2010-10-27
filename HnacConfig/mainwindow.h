@@ -2,9 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTranslator>
 #include "qtservice.h"
 
 class QSettings;
+class QComboBox;
 
 namespace Ui {
     class MainWindow;
@@ -24,8 +26,13 @@ private:
     QString login;
     QString pass;
     QSettings *settings;
+    QComboBox *languageBox;
+    QTranslator translator;
+    void createLanguageMenu();
 
 private slots:
+    void setLanguage(int);
+
     void on_pushButton_passsave_clicked();
     void on_pushButton_loginsave_clicked();
     void on_checkBox_showpass_clicked();
