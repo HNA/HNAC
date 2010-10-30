@@ -84,7 +84,16 @@ void MainWindow::createLanguageMenu()
 
 void MainWindow::setLanguage(int index)
 {
-    settings->setValue("language", languageBox->itemData(index));
+    QString locale = languageBox->itemData(index).toString();
+    translator.load(":/translation/HnacConfig_"+locale);
+    settings->setValue("language", locale);
+    ui->retranslateUi(this);
+    ui->statusBar->showMessage(tr("Selected language: ") + locale);
+}
+
+void MainWindow::retranslateUI()
+{
+
 }
 
 void MainWindow::on_pushButton_start_clicked()

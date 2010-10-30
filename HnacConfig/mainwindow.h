@@ -28,7 +28,9 @@ private:
     QSettings *settings;
     QComboBox *languageBox;
     QTranslator translator;
+    QStringList messages;
     void createLanguageMenu();
+    void retranslateUI();
 
 private slots:
     void setLanguage(int);

@@ -100,60 +100,65 @@
         <translation>За&amp;крыть</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="26"/>
+        <location filename="../mainwindow.cpp" line="32"/>
         <source>Hnac service already instaled. Press &quot;Start&quot;</source>
         <translation>Служба Hnac уже установлена. Нажмите &quot;Запустить&quot;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="31"/>
-        <location filename="../mainwindow.cpp" line="66"/>
-        <location filename="../mainwindow.cpp" line="105"/>
+        <location filename="../mainwindow.cpp" line="37"/>
+        <location filename="../mainwindow.cpp" line="103"/>
+        <location filename="../mainwindow.cpp" line="142"/>
         <source>Hnac service is running</source>
         <translation>Служба Hnac запущена</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="47"/>
+        <location filename="../mainwindow.cpp" line="53"/>
         <source>Press &quot;Install&quot; to install service</source>
         <translation>Нажмите &quot;Установить&quot; для установки службы</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="74"/>
+        <location filename="../mainwindow.cpp" line="91"/>
+        <source>Selected language: </source>
+        <translation>Выбран язык: </translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="111"/>
         <source>An error occurred during starting</source>
         <translation>Произошла ошибка при запуске</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="82"/>
-        <location filename="../mainwindow.cpp" line="98"/>
+        <location filename="../mainwindow.cpp" line="119"/>
+        <location filename="../mainwindow.cpp" line="135"/>
         <source>Hnac service is stopped</source>
         <translation>Служба Hnac остановлена</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="90"/>
+        <location filename="../mainwindow.cpp" line="127"/>
         <source>An error occurred during stoping</source>
         <translation>Произошла ошибка при остановке</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="123"/>
+        <location filename="../mainwindow.cpp" line="160"/>
         <source>Hnac service is instaled. Press &quot;Start&quot;</source>
         <translation>Служба Hnac установлена. Нажмите &quot;Запустить&quot;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="130"/>
+        <location filename="../mainwindow.cpp" line="167"/>
         <source>An error occurred during installation</source>
         <translation>Произошла ошибка при установке</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="138"/>
+        <location filename="../mainwindow.cpp" line="175"/>
         <source>Hnac service is uninstaled</source>
         <translation>Служба Hnac удалена</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="187"/>
+        <location filename="../mainwindow.cpp" line="224"/>
         <source>Login saved</source>
         <translation>Логин сохранен</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="196"/>
+        <location filename="../mainwindow.cpp" line="233"/>
         <source>Password saved</source>
         <translation>Пароль сохранен</translation>
     </message>
