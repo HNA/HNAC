@@ -18,10 +18,7 @@ public:
 
 public slots:
     void logout();
-    void tryLogin();
-#if !defined(Q_WS_WIN)
-    void tryLogin(QString login, QString pass);
-#endif
+    void tryLogin(QString login="", QString pass="");
 
 private slots:
     void sockConnected();

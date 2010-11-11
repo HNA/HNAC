@@ -10,6 +10,7 @@ Service::Service(int argc, char **argv)
             m_login = argv[1];
             m_pass = argv[2];
             newData = true;
+
         }
     else
     {

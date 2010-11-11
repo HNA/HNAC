@@ -6,6 +6,7 @@
 #include <QStringList>
 #include <QSettings>
 #include <QTimer>
+#include <QNetworkInterface>
 
 HnaClient::HnaClient(QObject *parent) :
     QObject(parent)
@@ -34,12 +35,13 @@ HnaClient::HnaClient(QObject *parent) :
     file.close();
     sock->setCaCertificates(certsCA);
 
+//отсылаем пинг
     m_tmr = new QTimer(this);
     m_tmr->setInterval(15000);
     connect(m_tmr, SIGNAL(timeout()), this, SLOT(sockSendPing()));
     m_tmr->start();
+//если ошибка...
     r_tmr = new QTimer(this);
-    r_tmr->setInterval(5000);
     connect(r_tmr, SIGNAL(timeout()), this, SLOT(tryLogin()));
 }
 
@@ -48,28 +50,50 @@ HnaClient::~HnaClient()
 
 void HnaClient::sockSendPing()
 {
-    sock->write("~ping;");
+    if(sock->write("~ping;") < 0) //ошибка при записи
+    {
+        r_tmr->start(5000);
+    }
 }
 
-#if !defined(Q_WS_WIN)
 void HnaClient::tryLogin(QString login, QString pass)
 {
-        m_login = login;
-        m_pass = pass;
-        newData = true;
+        if(login.isEmpty() && pass.isEmpty())
+        {
+            if(m_login.isEmpty() && m_pass.isEmpty())
+            {
+                m_login = settings->value("login", "").toString();
+                m_pass = settings->value("password", "").toString();
+            }
+        }
+        else
+        {
+            m_login = login;
+            m_pass = pass;
+            newData = true;
+        }
         r_tmr->stop();
-        sock->connectToHostEncrypted("172.30.0.1", 3816, QIODevice::ReadWrite);
-}
-#endif
 
-void HnaClient::tryLogin()
-{
-#if defined(Q_WS_WIN)
-    m_login = settings->value("login", "").toString();
-    m_pass = settings->value("password", "").toString();
-#endif
-    r_tmr->stop();
-    sock->connectToHostEncrypted("172.30.0.1", 3816, QIODevice::ReadWrite);
+//проверка на то есть ли сеть вообще =)
+//если нет - каждые 10 секунд пробовать переподключиться..
+        QString ipAddress;
+        QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
+        for (int i = 0; i < ipAddressesList.size(); ++i)
+        {
+            if (ipAddressesList.at(i) != QHostAddress::LocalHost &&
+                ipAddressesList.at(i).toIPv4Address())
+            {
+                ipAddress = ipAddressesList.at(i).toString();
+                break;
+            }
+        }
+        if (ipAddress.isEmpty())
+        {
+            r_tmr->start(10000);
+            return;
+        }
+//
+        sock->connectToHostEncrypted("172.30.0.1", 3816, QIODevice::ReadWrite);
 }
 
 void HnaClient::sockEncrypted()
@@ -82,8 +106,10 @@ void HnaClient::sockEncrypted()
             .append(" ")
             .append(QString::number(sock->localAddress().toIPv4Address()))
             .append(";");
-    sock->write(loginQuery);
-    // у некоторых баги с этой штукой (скорее всего функция выдает не тот IP... надо сделать проверку
+    if(sock->write(loginQuery) < 0)  //ошибка при записи
+    {
+        r_tmr->start(5000);
+    }
 }
 
 void HnaClient::sockConnected()
@@ -99,7 +125,7 @@ void HnaClient::sockConnected()
 
 void HnaClient::sockError(QAbstractSocket::SocketError)
 {
-    r_tmr->start();
+    r_tmr->start(5000);
 }
 
 void HnaClient::logout()
@@ -110,7 +136,7 @@ void HnaClient::logout()
 
 void HnaClient::sockReadyRead()
 {
-    sock->readAll();//работать будет... но в случае ошибки сложно отследить... позже исправлю..
+    sock->readAll();
 }
 
 void HnaClient::sockSslErrors(QList<QSslError> le)
